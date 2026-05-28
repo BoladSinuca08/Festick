@@ -51,4 +51,4 @@ Para executar o projeto localmente:
 
 1. Clonar o repositório:
    ```bash
-   git https://github.com/BoladSinuca08/Festick.git
+   git clone https://github.com/BoladSinuca08/Festick.git
