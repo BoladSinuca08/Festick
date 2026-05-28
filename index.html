@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Festick</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════════════════════════════════════════
+       AUTH SCREEN
+  ═══════════════════════════════════════════ -->
+  <div id="screen-auth" class="screen">
+    <div class="auth-top">
+      <div class="auth-logo">festick</div>
+      <p class="auth-tagline">A tua experiência de festival começa aqui</p>
+    </div>
+    <div class="auth-body">
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchAuthTab('login')">Entrar</div>
+        <div class="auth-tab" onclick="switchAuthTab('register')">Criar conta</div>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="auth-login">
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" id="login-email" type="email" placeholder="o.teu@email.com"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Palavra-passe</label>
+          <input class="form-input" id="login-pass" type="password" placeholder="••••••••"/>
+          <div class="form-error" id="login-error">E-mail ou palavra-passe incorretos.</div>
+        </div>
+        <button class="btn btn-primary" onclick="doLogin()" style="margin-top:8px">Entrar</button>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">
+          Conta demo: <b style="color:var(--text)">joana@festick.pt</b> / <b style="color:var(--text)">Joana@123</b>
+        </p>
+      </div>
+
+      <!-- REGISTER -->
+      <div id="auth-register" style="display:none">
+        <div class="form-group">
+          <label class="form-label">Nome completo</label>
+          <input class="form-input" id="reg-name" type="text" placeholder="O teu nome"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" id="reg-email" type="email" placeholder="o.teu@email.com"/>
+          <div class="form-error" id="reg-email-error">E-mail já registado.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Palavra-passe</label>
+          <input class="form-input" id="reg-pass" type="password" placeholder="Ex: Festa@123"/>
+          <div class="form-error" id="reg-pass-error">Mínimo 8 caracteres: maiúscula, minúscula, número e especial.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirmar palavra-passe</label>
+          <input class="form-input" id="reg-pass2" type="password" placeholder="Repetir palavra-passe"/>
+          <div class="form-error" id="reg-pass2-error">As palavras-passe não coincidem.</div>
+        </div>
+        <button class="btn btn-primary" onclick="doRegister()" style="margin-top:8px">Criar conta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       HOME SCREEN
+  ═══════════════════════════════════════════ -->
+  <div id="screen-home" class="screen">
+    <div class="scroll-content">
+      <div class="top-bar">
+        <div class="logo">festick</div>
+        <button class="avatar-btn" id="home-avatar" onclick="goTo('profile')">J</button>
+      </div>
+      <div class="hero">
+        <h2>Descobre os<br/>próximos <span>festivais</span></h2>
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="color:var(--muted);flex-shrink:0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input id="search-input" placeholder="Pesquisar eventos, cidade..." oninput="filterEvents()"/>
+        </div>
+      </div>
+      <div class="filters" id="filters-row">
+        <div class="filter-chip active" onclick="setFilter('Todos',this)">Todos</div>
+        <div class="filter-chip" onclick="setFilter('Festival',this)">Festival</div>
+        <div class="filter-chip" onclick="setFilter('Concerto',this)">Concerto</div>
+        <div class="filter-chip" onclick="setFilter('Teatro',this)">Teatro</div>
+        <div class="filter-chip" onclick="setFilter('Feira',this)">Feira</div>
+      </div>
+      <div class="section">
+        <div class="section-header"><div class="section-title">Em destaque</div></div>
+      </div>
+      <div class="events-scroll" id="featured-events"></div>
+      <div style="height:20px"></div>
+      <div class="section">
+        <div class="section-header"><div class="section-title">Todos os eventos</div></div>
+        <div id="all-events"></div>
+      </div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="nav-item active" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Início</span>
+      </div>
+      <div class="nav-item" onclick="goTo('tickets')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg>
+        <span>Bilhetes</span>
+      </div>
+      <div class="nav-item" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 12h.01"/></svg>
+        <span>Carteira</span>
+      </div>
+      <div class="nav-item" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Perfil</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       EVENT DETAIL
+  ═══════════════════════════════════════════ -->
+  <div id="screen-detail" class="screen">
+    <div class="scroll-content">
+      <div class="detail-hero" id="detail-hero"></div>
+      <div class="detail-body">
+        <h1 class="detail-title" id="detail-title"></h1>
+        <div id="detail-badges"></div>
+        <div class="info-row" id="detail-info"></div>
+        <div id="detail-map"></div>
+        <div class="section-title" style="margin-bottom:14px">Escolhe o teu bilhete</div>
+        <div id="ticket-types"></div>
+        <div style="height:100px"></div>
+      </div>
+    </div>
+    <div class="checkout-bar" id="checkout-bar" style="display:none">
+      <div>
+        <div class="total-label">Total</div>
+        <div class="total-amount" id="checkout-total">€0</div>
+      </div>
+      <button class="btn btn-primary" style="width:auto;padding:12px 24px" onclick="openPayModal()">Comprar</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       TICKETS LIST
+  ═══════════════════════════════════════════ -->
+  <div id="screen-tickets" class="screen">
+    <div class="scroll-content">
+      <div class="top-bar">
+        <div class="section-title" style="font-size:22px">Os meus bilhetes</div>
+      </div>
+      <div class="section">
+        <div id="my-tickets-list"></div>
+      </div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="nav-item" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Início</span>
+      </div>
+      <div class="nav-item active" onclick="goTo('tickets')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg>
+        <span>Bilhetes</span>
+      </div>
+      <div class="nav-item" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 12h.01"/></svg>
+        <span>Carteira</span>
+      </div>
+      <div class="nav-item" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Perfil</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       TICKET DETAIL (individual)
+  ═══════════════════════════════════════════ -->
+  <div id="screen-ticket-detail" class="screen">
+    <div class="scroll-content">
+      <div id="ticket-detail-content"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       WALLET
+  ═══════════════════════════════════════════ -->
+  <div id="screen-wallet" class="screen">
+    <div class="scroll-content">
+      <div class="top-bar">
+        <div class="section-title" style="font-size:22px">Carteira digital</div>
+      </div>
+      <div class="wallet-hero">
+        <div class="wallet-label">Saldo disponível</div>
+        <div class="wallet-balance"><span>€</span><span id="wallet-balance-num">0.00</span></div>
+        <div class="wallet-actions">
+          <div class="wallet-action-btn" onclick="openTopupModal()">
+            <div class="wa-icon">➕</div>
+            <div class="wa-label">Carregar</div>
+          </div>
+          <div class="wallet-action-btn" onclick="showToast('Apresenta o QR Code do teu bilhete no stand','success')">
+            <div class="wa-icon">📲</div>
+            <div class="wa-label">Pagar</div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">Histórico</div>
+          <div style="display:flex;gap:6px">
+            <div class="filter-chip hist-filter-btn active" id="hist-filter-all" style="padding:6px 10px;font-size:11px" onclick="filterHistory('all')">Tudo</div>
+            <div class="filter-chip hist-filter-btn" id="hist-filter-credit" style="padding:6px 10px;font-size:11px" onclick="filterHistory('credit')">Carregamentos</div>
+            <div class="filter-chip hist-filter-btn" id="hist-filter-debit" style="padding:6px 10px;font-size:11px" onclick="filterHistory('debit')">Compras</div>
+          </div>
+        </div>
+        <div id="wallet-history"></div>
+      </div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="nav-item" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Início</span>
+      </div>
+      <div class="nav-item" onclick="goTo('tickets')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg>
+        <span>Bilhetes</span>
+      </div>
+      <div class="nav-item active" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 12h.01"/></svg>
+        <span>Carteira</span>
+      </div>
+      <div class="nav-item" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Perfil</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PROFILE
+  ═══════════════════════════════════════════ -->
+  <div id="screen-profile" class="screen">
+    <div class="scroll-content">
+      <div class="load-top"></div>
+      <div class="profile-hero">
+        <div class="profile-avatar" id="profile-avatar">J</div>
+        <div class="profile-name" id="profile-name">Joana Ferreira</div>
+        <div class="profile-email" id="profile-email">joana@festick.pt</div>
+      </div>
+      <div class="profile-menu">
+        <div class="profile-item" onclick="goTo('tickets')">
+          <span class="profile-item-icon">🎟️</span>
+          <span class="profile-item-text">Os meus bilhetes</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="profile-item" onclick="goTo('wallet')">
+          <span class="profile-item-icon">💳</span>
+          <span class="profile-item-text">Carteira digital</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <!-- DEMO RESET BUTTON -->
+        <div class="profile-item" onclick="demoReset()" style="margin-top:24px;border-color:rgba(251,191,36,.3)">
+          <span class="profile-item-icon">🔄</span>
+          <span class="profile-item-text">Reset de dados <span class="demo-badge">DEMO</span></span>
+        </div>
+        <div class="profile-item" onclick="doLogout()" style="border-color:rgba(248,113,113,.3)">
+          <span class="profile-item-icon">🚪</span>
+          <span class="profile-item-text" style="color:var(--accent)">Terminar sessão</span>
+        </div>
+      </div>
+    </div>
+    <nav class="bottom-nav">
+      <div class="nav-item" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Início</span>
+      </div>
+      <div class="nav-item" onclick="goTo('tickets')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg>
+        <span>Bilhetes</span>
+      </div>
+      <div class="nav-item" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 12h.01"/></svg>
+        <span>Carteira</span>
+      </div>
+      <div class="nav-item active" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Perfil</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MODAL: PAYMENT
+  ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-pay">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">Confirmar compra</div>
+      <div id="pay-summary" style="margin-bottom:20px"></div>
+      <div class="form-group">
+        <label class="form-label">Método de pagamento</label>
+        <select class="form-input" id="pay-method">
+          <option value="MBWay">MBWay</option>
+          <option value="PayPal">PayPal</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="confirmPurchase()">Pagar agora</button>
+      <button class="btn btn-secondary" style="margin-top:10px" onclick="closeModal('modal-pay')">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MODAL: TOP UP
+  ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-topup">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">Carregar carteira</div>
+      <div id="topup-presets" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+        <div class="filter-chip" onclick="setTopupAmount(10,this)">€10</div>
+        <div class="filter-chip" onclick="setTopupAmount(20,this)">€20</div>
+        <div class="filter-chip" onclick="setTopupAmount(50,this)">€50</div>
+        <div class="filter-chip" onclick="setTopupAmount(100,this)">€100</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Outro valor (€5 – €200)</label>
+        <input class="form-input" id="topup-amount" type="number" min="5" max="200" placeholder="Ex: 30" oninput="onTopupManualInput()"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Método</label>
+        <select class="form-input" id="topup-method">
+          <option>MBWay</option>
+          <option>PayPal</option>
+          <option>Apple Pay</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="confirmTopup()">Confirmar carregamento</button>
+      <button class="btn btn-secondary" style="margin-top:10px" onclick="closeModal('modal-topup')">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

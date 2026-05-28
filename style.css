@@ -1,0 +1,277 @@
+/* ============================================================
+   FESTICK — THEME VARIABLES
+   Change colors here to retheme the entire app
+   ============================================================ */
+:root {
+  --bg:       #0a0a0f;   /* Main background */
+  --bg2:      #111118;   /* Secondary background */
+  --bg3:      #1a1a24;   /* Tertiary background */
+  --card:     #16161f;   /* Card background */
+  --accent:   #ff4d6d;   /* Primary accent (buttons, highlights) */
+  --accent2:  #ff8c42;   /* Secondary accent (prices) */
+  --gold:     #ffd166;   /* VIP / gold highlights */
+  --text:     #f0f0f5;   /* Primary text */
+  --muted:    #7a7a9a;   /* Muted / secondary text */
+  --border:   rgba(255,255,255,0.07); /* Subtle borders */
+  --radius:   16px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font-body); }
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+#app { max-width: 430px; margin: 0 auto; min-height: 100vh; position: relative; overflow: hidden; background: var(--bg); }
+.screen { display: none; flex-direction: column; min-height: 100vh; animation: fadeIn .3s ease; }
+.screen.active { display: flex; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* ============================================================
+   BOTTOM NAV
+   ============================================================ */
+.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: rgba(16,16,24,0.95); backdrop-filter: blur(20px); border-top: 1px solid var(--border); display: flex; z-index: 100; padding: 8px 0 20px; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 6px 0; color: var(--muted); transition: color .2s; font-size: 10px; font-family: var(--font-body); }
+.nav-item.active { color: var(--accent); }
+.nav-item svg { width: 22px; height: 22px; }
+.nav-item span { font-size: 10px; font-weight: 500; }
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.scroll-content { flex: 1; overflow-y: auto; padding-bottom: 90px; }
+.scroll-content::-webkit-scrollbar { display: none; }
+.top-bar { padding: 20px 20px 10px; display: flex; align-items: center; justify-content: space-between; }
+.section { padding: 0 20px 24px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.section-title { font-family: var(--font-head); font-size: 18px; font-weight: 700; }
+.see-all { font-size: 13px; color: var(--accent); cursor: pointer; }
+.load-top { height: 60px; display: flex; align-items: center; padding: 0 20px; }
+
+/* ============================================================
+   LOGO & AVATAR
+   ============================================================ */
+.logo { font-family: var(--font-head); font-size: 24px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.avatar-btn { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 700; font-size: 15px; color: white; cursor: pointer; border: none; }
+
+/* ============================================================
+   HERO / SEARCH
+   ============================================================ */
+.hero { padding: 10px 20px 20px; }
+.hero h2 { font-family: var(--font-head); font-size: 26px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero h2 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.search-box { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+.search-box input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-family: var(--font-body); font-size: 15px; }
+.search-box input::placeholder { color: var(--muted); }
+
+/* ============================================================
+   FILTER CHIPS
+   ============================================================ */
+.filters { display: flex; gap: 8px; padding: 0 20px 20px; overflow-x: auto; }
+.filters::-webkit-scrollbar { display: none; }
+.filter-chip { flex-shrink: 0; padding: 8px 16px; border-radius: 30px; border: 1px solid var(--border); background: var(--card); color: var(--muted); font-size: 13px; font-family: var(--font-body); cursor: pointer; transition: all .2s; white-space: nowrap; }
+.filter-chip.active { background: var(--accent); border-color: var(--accent); color: white; font-weight: 500; }
+
+/* ============================================================
+   EVENT CARDS — HORIZONTAL SCROLL
+   ============================================================ */
+.events-scroll { display: flex; gap: 14px; padding: 0 20px 4px; overflow-x: auto; }
+.events-scroll::-webkit-scrollbar { display: none; }
+.event-card { flex-shrink: 0; width: 200px; background: var(--card); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: transform .2s; border: 1px solid var(--border); }
+.event-card:hover { transform: translateY(-2px); }
+.event-card-img { height: 120px; position: relative; overflow: hidden; }
+.event-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.event-card-img .emoji-bg { font-size: 60px; display: flex; align-items: center; justify-content: center; height: 100%; }
+.event-tag { position: absolute; top: 8px; left: 8px; background: var(--accent); color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px; font-family: var(--font-head); }
+.event-card-body { padding: 12px; }
+.event-name { font-family: var(--font-head); font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.event-meta { font-size: 12px; color: var(--muted); }
+.event-price { font-size: 13px; color: var(--accent2); font-weight: 600; margin-top: 8px; font-family: var(--font-head); }
+.event-sold-out { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--bg3); border-radius: 20px; padding: 2px 8px; display: inline-block; margin-top: 6px; }
+
+/* ============================================================
+   EVENT CARDS — LIST
+   ============================================================ */
+.event-list-card { display: flex; gap: 14px; background: var(--card); border-radius: var(--radius); padding: 0; margin-bottom: 12px; cursor: pointer; border: 1px solid var(--border); transition: border-color .2s; overflow: hidden; }
+.event-list-card:hover { border-color: var(--accent); }
+.event-list-card.sold-out { opacity: .6; }
+.event-list-thumb { width: 90px; height: 90px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 36px; }
+.event-list-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.event-list-info { flex: 1; padding: 12px 12px 12px 0; }
+.event-list-name { font-family: var(--font-head); font-weight: 700; font-size: 15px; margin-bottom: 3px; }
+.event-list-sub { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+.event-list-price { font-size: 14px; color: var(--accent2); font-weight: 600; font-family: var(--font-head); }
+.sold-out-badge { font-size: 11px; font-weight: 700; color: #f87171; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px 24px; border-radius: 14px; border: none; cursor: pointer; font-family: var(--font-head); font-weight: 700; font-size: 15px; transition: all .2s; width: 100%; }
+.btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
+.btn-primary:hover { opacity: .9; transform: translateY(-1px); }
+.btn-primary:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.btn-secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
+.btn-danger { background: transparent; color: #f87171; border: 1px solid rgba(248,113,113,.3); }
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: .5px; }
+.form-input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); font-family: var(--font-body); font-size: 15px; outline: none; transition: border-color .2s; }
+.form-input:focus { border-color: var(--accent); }
+.form-input::placeholder { color: var(--muted); }
+.form-error { font-size: 12px; color: var(--accent); margin-top: 6px; display: none; }
+
+/* ============================================================
+   AUTH SCREEN
+   ============================================================ */
+#screen-auth { background: var(--bg); }
+.auth-top { padding: 60px 32px 40px; text-align: center; }
+.auth-logo { font-family: var(--font-head); font-size: 48px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+.auth-tagline { color: var(--muted); font-size: 15px; }
+.auth-body { padding: 0 24px 40px; }
+.auth-tabs { display: flex; background: var(--card); border-radius: 12px; padding: 4px; margin-bottom: 24px; }
+.auth-tab { flex: 1; padding: 10px; text-align: center; border-radius: 10px; cursor: pointer; font-family: var(--font-head); font-weight: 600; font-size: 14px; color: var(--muted); transition: all .2s; }
+.auth-tab.active { background: var(--accent); color: white; }
+
+/* ============================================================
+   EVENT DETAIL
+   ============================================================ */
+.detail-hero { height: 260px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.detail-hero img { width: 100%; height: 100%; object-fit: cover; }
+.detail-hero .emoji-fallback { font-size: 90px; }
+.detail-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 140px; background: linear-gradient(to bottom, transparent, var(--bg)); pointer-events: none; }
+.detail-back { position: absolute; top: 50px; left: 16px; z-index: 10; background: rgba(0,0,0,.5); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(8px); }
+.detail-body { padding: 20px; }
+.detail-title { font-family: var(--font-head); font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+.detail-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--bg3); border: 1px solid var(--border); border-radius: 30px; padding: 6px 12px; font-size: 13px; margin-right: 8px; margin-bottom: 20px; }
+.info-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.info-box { flex: 1; min-width: 100px; background: var(--card); border-radius: 12px; padding: 14px; border: 1px solid var(--border); }
+.info-box-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
+.info-box-val { font-family: var(--font-head); font-weight: 700; font-size: 14px; line-height: 1.3; }
+
+/* MAP EMBED */
+.map-embed { border-radius: 14px; overflow: hidden; margin-bottom: 20px; border: 1px solid var(--border); cursor: pointer; position: relative; }
+.map-embed iframe { width: 100%; height: 180px; border: none; display: block; pointer-events: none; }
+.map-embed-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.0); transition: background .2s; }
+.map-embed:hover .map-embed-overlay { background: rgba(0,0,0,.15); }
+.map-link-btn { background: rgba(0,0,0,.6); backdrop-filter: blur(8px); color: white; font-size: 12px; padding: 6px 14px; border-radius: 20px; font-family: var(--font-head); font-weight: 600; opacity: 0; transition: opacity .2s; }
+.map-embed:hover .map-link-btn { opacity: 1; }
+
+/* TICKET SELECTOR */
+.ticket-selector { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); }
+.ticket-type-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.ticket-type-name { font-family: var(--font-head); font-weight: 700; font-size: 15px; }
+.ticket-type-price { font-size: 18px; font-weight: 700; color: var(--accent2); font-family: var(--font-head); }
+.qty-ctrl { display: flex; align-items: center; gap: 12px; }
+.qty-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg3); color: var(--text); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; }
+.qty-btn:hover { background: var(--accent); border-color: var(--accent); }
+.qty-btn:disabled { opacity: .3; cursor: not-allowed; }
+.qty-num { font-family: var(--font-head); font-weight: 700; font-size: 18px; min-width: 24px; text-align: center; }
+
+/* CHECKOUT BAR */
+.checkout-bar { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); width: calc(100% - 40px); max-width: 390px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; z-index: 50; backdrop-filter: blur(10px); }
+.checkout-bar .total-label { font-size: 12px; color: var(--muted); }
+.checkout-bar .total-amount { font-size: 22px; font-weight: 800; color: var(--accent2); font-family: var(--font-head); }
+
+/* ============================================================
+   TICKETS SCREEN
+   ============================================================ */
+.ticket-card { background: var(--card); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border); cursor: pointer; transition: border-color .2s; }
+.ticket-card:hover { border-color: var(--accent); }
+.ticket-card-top { padding: 16px; display: flex; gap: 14px; align-items: center; }
+.ticket-thumb { width: 60px; height: 60px; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 28px; overflow: hidden; }
+.ticket-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.ticket-info-name { font-family: var(--font-head); font-weight: 700; font-size: 16px; margin-bottom: 3px; }
+.ticket-info-sub { font-size: 12px; color: var(--muted); }
+.ticket-type-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; margin-top: 6px; display: inline-block; }
+.badge-normal { background: rgba(255,77,109,.15); color: var(--accent); }
+.badge-vip { background: rgba(255,209,102,.15); color: var(--gold); }
+.ticket-card-footer { border-top: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+.ticket-qr-preview { font-family: monospace; font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+.ticket-valid { font-size: 12px; color: #4ade80; }
+
+/* ============================================================
+   TICKET DETAIL (individual view)
+   ============================================================ */
+.ticket-detail-wrap { padding: 24px 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.ticket-detail-event { font-family: var(--font-head); font-size: 22px; font-weight: 800; text-align: center; }
+.ticket-detail-sub { color: var(--muted); font-size: 14px; text-align: center; }
+.ticket-detail-qr { background: white; border-radius: 16px; padding: 20px; display: flex; align-items: center; justify-content: center; }
+.ticket-detail-qr img { width: 220px; height: 220px; display: block; }
+.ticket-detail-code { font-family: var(--font-head); font-size: 18px; font-weight: 700; letter-spacing: 2px; text-align: center; }
+.ticket-detail-info { background: var(--card); border-radius: 14px; padding: 16px; width: 100%; border: 1px solid var(--border); }
+.ticket-detail-info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.ticket-detail-info-row:last-child { border-bottom: none; }
+.ticket-detail-info-row span:first-child { color: var(--muted); }
+.ticket-detail-info-row span:last-child { font-weight: 600; }
+
+/* ============================================================
+   WALLET
+   ============================================================ */
+.wallet-hero { margin: 0 20px 20px; background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 20px; padding: 24px; border: 1px solid rgba(255,77,109,.2); position: relative; overflow: hidden; }
+.wallet-hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(255,77,109,.15), transparent); border-radius: 50%; }
+.wallet-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wallet-balance { font-family: var(--font-head); font-size: 42px; font-weight: 800; color: white; margin-bottom: 4px; }
+.wallet-balance span { font-size: 20px; color: var(--muted); }
+.wallet-actions { display: flex; gap: 10px; margin-top: 20px; }
+.wallet-action-btn { flex: 1; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; transition: background .2s; }
+.wallet-action-btn:hover { background: rgba(255,77,109,.2); }
+.wallet-action-btn .wa-icon { font-size: 20px; margin-bottom: 4px; }
+.wallet-action-btn .wa-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+.hist-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.hist-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.hist-icon.credit { background: rgba(74,222,128,.1); }
+.hist-icon.debit { background: rgba(255,77,109,.1); }
+.hist-info { flex: 1; }
+.hist-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.hist-date { font-size: 12px; color: var(--muted); }
+.hist-amount { font-family: var(--font-head); font-weight: 700; font-size: 15px; }
+.hist-amount.credit { color: #4ade80; }
+.hist-amount.debit { color: var(--accent); }
+
+/* ============================================================
+   PROFILE
+   ============================================================ */
+.profile-hero { padding: 40px 20px 20px; text-align: center; }
+.profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 700; font-size: 30px; color: white; margin: 0 auto 12px; }
+.profile-name { font-family: var(--font-head); font-size: 22px; font-weight: 800; }
+.profile-email { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.profile-menu { margin: 24px 20px 0; }
+.profile-item { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--card); border-radius: 14px; margin-bottom: 10px; cursor: pointer; border: 1px solid var(--border); transition: border-color .2s; }
+.profile-item:hover { border-color: var(--accent); }
+.profile-item-icon { font-size: 20px; }
+.profile-item-text { flex: 1; font-size: 15px; font-weight: 500; }
+.demo-badge { font-size: 10px; background: rgba(255,77,109,.15); color: var(--accent); border-radius: 6px; padding: 2px 6px; font-weight: 700; }
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.8); z-index: 200; display: none; align-items: flex-end; backdrop-filter: blur(4px); }
+.modal-overlay.open { display: flex; }
+.modal-sheet { background: var(--bg2); border-radius: 24px 24px 0 0; padding: 28px 24px 40px; width: 100%; max-width: 430px; margin: 0 auto; animation: slideUp .3s ease; }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+.modal-title { font-family: var(--font-head); font-size: 22px; font-weight: 800; margin-bottom: 20px; }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 20px; font-size: 14px; z-index: 999; transition: transform .3s; white-space: nowrap; max-width: 340px; text-align: center; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: #4ade80; }
+.toast.error { border-color: var(--accent); }
+
+/* ============================================================
+   EMPTY STATES
+   ============================================================ */
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 32px; text-align: center; min-height: 50vh; }
+.empty-icon { font-size: 64px; margin-bottom: 20px; }
+.empty-title { font-family: var(--font-head); font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.empty-sub { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
